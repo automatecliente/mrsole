@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import WhatsAppFloatingButton from '@/components/layout/WhatsAppFloatingButton';
+import StoreLayoutProvider from '@/components/layout/StoreLayoutProvider';
 import Toast from '@/components/shared/Toast';
 import UTMCapture from '@/components/shared/UTMCapture';
 
@@ -41,10 +39,9 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-body antialiased" style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
         <UTMCapture />
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
+        <StoreLayoutProvider>
+          {children}
+        </StoreLayoutProvider>
         <Toast />
       </body>
     </html>
