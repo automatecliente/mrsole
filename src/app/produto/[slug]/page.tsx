@@ -36,6 +36,7 @@ export default function ProductPage() {
   const [showSizeGuide, setShowSizeGuide] = useState(false);
   const [sizeError, setSizeError] = useState(false);
   const [colorError, setColorError] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const [showStickyCart, setShowStickyCart] = useState(false);
 
@@ -115,13 +116,29 @@ export default function ProductPage() {
             animate={{ opacity: 1, x: 0 }}
             className="space-y-4"
           >
-            <div className="aspect-product rounded-xl overflow-hidden bg-brand-sand relative">
-              <div className="absolute inset-0 flex items-center justify-center text-brand-graphite/20">
-                <div className="text-center">
-                  <Shirt size={64} className="mx-auto mb-3 text-brand-graphite/15" />
-                  <p className="text-sm font-body">{product.name}</p>
+            <div className="aspect-product rounded-xl overflow-hidden bg-brand-charcoal relative border border-brand-white/5 shadow-md">
+              {product.images && product.images.length > 0 ? (
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={activeImageIndex}
+                    src={product.images[activeImageIndex]}
+                    alt={`${product.name} - Foto ${activeImageIndex + 1}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center text-brand-graphite/20">
+                  <div className="text-center">
+                    <Shirt size={64} className="mx-auto mb-3 text-brand-graphite/15" />
+                    <p className="text-sm font-body">{product.name}</p>
+                  </div>
                 </div>
-              </div>
+              )}
+
               {product.is_best_seller && (
                 <span className="absolute top-4 left-4 bg-accent-gold text-brand-black text-xs uppercase tracking-wider font-bold px-3 py-1 rounded z-10">
                   Mais vendida
@@ -133,14 +150,30 @@ export default function ProductPage() {
                 </span>
               )}
             </div>
+
             {/* Thumbnail strip */}
-            <div className="flex gap-3">
-              {product.images.map((_, i) => (
-                <div key={i} className="w-20 h-24 rounded-lg bg-brand-sand border-2 border-brand-graphite/10 flex items-center justify-center text-xs text-brand-graphite/30 font-body">
-                  {i + 1}
-                </div>
-              ))}
-            </div>
+            {product.images && product.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+                {product.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImageIndex(i)}
+                    className={cn(
+                      "w-20 h-24 rounded-lg overflow-hidden bg-brand-charcoal border-2 transition-all flex-shrink-0 relative",
+                      activeImageIndex === i 
+                        ? "border-accent-gold" 
+                        : "border-brand-graphite/10 hover:border-brand-graphite/30"
+                    )}
+                  >
+                    <img 
+                      src={img} 
+                      alt={`Miniatura ${i + 1}`} 
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </motion.div>
 
           {/* Product Info */}
@@ -248,7 +281,7 @@ export default function ProductPage() {
               <button
                 onClick={handleAddToOrder}
                 disabled={product.stock_status === 'out_of_stock'}
-                className="flex-1 flex items-center justify-center gap-2 bg-brand-black hover:bg-brand-charcoal text-brand-white font-bold py-4 px-6 rounded-lg text-base transition-all hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 bg-brand-black hover:bg-brand-charcoal text-brand-white font-bold py-4 px-6 rounded-lg text-base border border-accent-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.08)] hover:shadow-[0_0_20px_rgba(212,175,55,0.2)] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <ShoppingBag size={18} />
                 Adicionar ao pedido
@@ -257,7 +290,7 @@ export default function ProductPage() {
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Olá! Gostaria de tirar uma dúvida sobre a ${product.name}.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 border-2 border-brand-graphite/15 hover:border-green-500 text-brand-graphite hover:text-green-600 font-semibold py-4 px-6 rounded-lg text-base transition-all"
+                className="flex items-center justify-center gap-2 border-2 border-brand-graphite/15 hover:border-accent-gold text-brand-graphite hover:text-brand-black hover:bg-accent-gold font-semibold py-4 px-6 rounded-lg text-base transition-all"
               >
                 <MessageCircle size={18} />
                 Tirar dúvida

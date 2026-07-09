@@ -38,16 +38,46 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
       transition={{ duration: 0.4 }}
     >
       {/* Image */}
-      <Link href={`/produto/${product.slug}`} className="block relative aspect-product overflow-hidden bg-brand-sand">
-        <div className="absolute inset-0 bg-gradient-to-b from-brand-charcoal/5 to-brand-charcoal/30 z-10" />
-        <div className="absolute inset-0 flex items-center justify-center text-brand-graphite/30 text-sm font-body">
-          <div className="text-center p-4">
-            <div className="w-16 h-16 mx-auto mb-2 rounded-full bg-brand-graphite/10 flex items-center justify-center">
-              <ShoppingBag size={24} className="text-brand-graphite/30" />
+      <Link href={`/produto/${product.slug}`} className="block relative aspect-product overflow-hidden bg-brand-charcoal">
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-brand-black/30 z-10 pointer-events-none" />
+
+        {/* Product Images */}
+        {product.images && product.images.length > 0 ? (
+          <>
+            {/* Image 2 (Second image - visible on hover) */}
+            {product.images[1] && (
+              <img
+                src={product.images[1]}
+                alt={`${product.name} - Detalhe`}
+                className="absolute inset-0 w-full h-full object-cover scale-100 group-hover:scale-105 transition-all duration-700 ease-out z-0"
+                loading="lazy"
+              />
+            )}
+            {/* Image 1 (Primary image - fades on hover if Image 2 is available) */}
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className={cn(
+                "absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-out z-0",
+                product.images[1] 
+                  ? "group-hover:opacity-0 group-hover:scale-105" 
+                  : "group-hover:scale-105"
+              )}
+              loading="lazy"
+            />
+          </>
+        ) : (
+          /* Placeholder */
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-accent-gold/40 text-sm font-body bg-brand-charcoal border border-brand-white/5">
+            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-accent-gold/5 flex items-center justify-center border border-accent-gold/10">
+              <ShoppingBag size={24} className="text-accent-gold/40" />
             </div>
-            {product.name}
+            <span className="font-display tracking-widest text-[10px] uppercase text-brand-white/40">
+              MRSOLE
+            </span>
           </div>
-        </div>
+        )}
 
         {/* Badge */}
         {badge && (

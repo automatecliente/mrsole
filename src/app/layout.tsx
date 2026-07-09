@@ -4,6 +4,7 @@ import './globals.css';
 import StoreLayoutProvider from '@/components/layout/StoreLayoutProvider';
 import Toast from '@/components/shared/Toast';
 import UTMCapture from '@/components/shared/UTMCapture';
+import CustomCursor from '@/components/shared/CustomCursor';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-body antialiased" style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
         <UTMCapture />
+        <CustomCursor />
         <StoreLayoutProvider>
           {children}
         </StoreLayoutProvider>
