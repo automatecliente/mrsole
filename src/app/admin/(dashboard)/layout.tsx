@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { LayoutDashboard, ShoppingBag, Users, Package, Settings, LogOut } from 'lucide-react';
 import { BRAND_NAME } from '@/lib/constants';
@@ -39,6 +41,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-brand-graphite hover:text-brand-black hover:bg-brand-graphite/5 transition-colors">
             <Settings size={18} /> Ver Loja
           </Link>
+          <button 
+            onClick={async () => {
+              await fetch('/api/auth/logout', { method: 'POST' });
+              window.location.href = '/admin/login';
+            }}
+            className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-status-error hover:text-status-error hover:bg-status-error/5 transition-colors"
+          >
+            <LogOut size={18} /> Sair
+          </button>
         </div>
       </aside>
 

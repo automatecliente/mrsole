@@ -38,7 +38,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-hero-mobile md:text-hero-desktop text-brand-white leading-tight mb-6"
+            className="font-display text-4xl md:text-6xl lg:text-7xl text-brand-white leading-tight mb-6"
           >
             Camisas masculinas para homens que se vestem com{' '}
             <span className="text-accent-gold">presença.</span>

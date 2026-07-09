@@ -30,8 +30,6 @@
   --font-body: "Inter", system-ui, sans-serif;
 
   /* === FONT SIZES === */
-  --text-hero-desktop: 4rem;
-  --text-hero-mobile: 2.25rem;
 
   /* === ANIMATIONS === */
   --animate-fade-in: fade-in 0.5s ease-out;
