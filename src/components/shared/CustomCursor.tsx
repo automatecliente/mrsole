@@ -81,25 +81,23 @@ export default function CustomCursor() {
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
           scale: isHovered ? 2.5 : 1,
           mixBlendMode: isHovered ? 'difference' : 'normal',
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28 }}
       />
       {/* Outer ring */}
       <motion.div
         className="fixed top-0 left-0 w-8 h-8 border border-accent-gold/40 rounded-full pointer-events-none z-[9998]"
         style={{
-          x: useSpring(useMotionValue(0), springConfig), // Placeholder offset to center outer circle
-          y: useSpring(useMotionValue(0), springConfig),
-          left: cursorXSpring,
-          top: cursorYSpring,
-          translateX: '-30%',
-          translateY: '-30%',
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: '-50%',
+          translateY: '-50%',
           scale: isHovered ? 1.5 : 1,
           opacity: isHovered ? 0 : 1,
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28 }}
       />
     </>
   );
