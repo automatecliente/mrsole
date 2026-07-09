@@ -72,7 +72,7 @@ export default function HeroSection() {
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5581999999999'}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border-2 border-brand-white/20 hover:border-green-500 text-brand-white hover:text-green-400 font-semibold px-8 py-4 rounded-lg text-base transition-all"
+              className="inline-flex items-center justify-center gap-2 border-2 border-brand-white/20 hover:border-accent-gold text-brand-white hover:text-accent-gold font-semibold px-8 py-4 rounded-lg text-base transition-all"
             >
               <MessageCircle size={18} />
               Falar com atendente

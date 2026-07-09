@@ -141,7 +141,7 @@ export default function CheckoutWhatsAppPage() {
             <ArrowLeft size={20} />
           </Link>
           <h1 className="font-display text-2xl md:text-3xl text-brand-black">
-            Finalizar pelo <span className="text-green-600">WhatsApp</span>
+            Finalizar <span className="text-accent-gold">Pedido</span>
           </h1>
         </div>
 
@@ -266,10 +266,10 @@ export default function CheckoutWhatsAppPage() {
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-xl text-lg transition-all hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-3 bg-brand-black hover:bg-brand-charcoal text-brand-white font-bold py-5 rounded-xl text-lg transition-all hover:shadow-xl disabled:opacity-60 disabled:cursor-not-allowed border border-brand-white/10"
               whileTap={{ scale: 0.98 }}
             >
-              <MessageCircle size={22} />
+              <MessageCircle size={22} className="text-accent-gold" />
               {isSubmitting ? 'Enviando...' : 'Enviar pedido pelo WhatsApp'}
             </motion.button>
 

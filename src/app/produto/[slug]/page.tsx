@@ -13,8 +13,8 @@ import QuantitySelector from '@/components/product/QuantitySelector';
 import ProductCard from '@/components/product/ProductCard';
 import { formatCurrencyBRL, cn } from '@/lib/utils';
 import { MICROCOPY, WHATSAPP_NUMBER } from '@/lib/constants';
-import { ShoppingBag, MessageCircle, Ruler, ChevronLeft, Shirt, ArrowRight, Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ShoppingBag, MessageCircle, Ruler, ChevronLeft, Shirt, ArrowRight, Loader2, Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { sizeGuide } from '@/data/sizeGuide';
 import { Product } from '@/types';
 
@@ -37,6 +37,8 @@ export default function ProductPage() {
   const [sizeError, setSizeError] = useState(false);
   const [colorError, setColorError] = useState(false);
 
+  const [showStickyCart, setShowStickyCart] = useState(false);
+
   useEffect(() => {
     productService.getProductBySlug(slug).then(data => {
       if (data) {
@@ -45,6 +47,14 @@ export default function ProductPage() {
       }
       setLoading(false);
     });
+
+    const handleScroll = () => {
+      // Show sticky cart after scrolling down past the main CTA
+      setShowStickyCart(window.scrollY > 500);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [slug]);
 
   if (loading) {
@@ -297,6 +307,30 @@ export default function ProductPage() {
           </section>
         )}
       </div>
+
+      {/* Mobile Sticky Add to Cart */}
+      <AnimatePresence>
+        {showStickyCart && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            className="fixed bottom-0 left-0 right-0 z-40 bg-brand-white border-t border-brand-graphite/10 p-4 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] md:hidden flex items-center justify-between gap-4"
+          >
+            <div className="flex-1 min-w-0">
+              <p className="text-xs text-brand-graphite font-body truncate">{product.name}</p>
+              <p className="font-bold text-brand-black">{formatCurrencyBRL(price)}</p>
+            </div>
+            <button
+              onClick={handleAddToOrder}
+              disabled={product.stock_status === 'out_of_stock'}
+              className="bg-brand-black text-brand-white font-bold py-3 px-6 rounded-lg text-sm flex-shrink-0 disabled:opacity-40"
+            >
+              Adicionar
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

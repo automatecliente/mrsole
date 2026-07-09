@@ -26,8 +26,8 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
   const badgeColor = product.is_best_seller
     ? 'bg-accent-gold text-brand-black'
     : product.is_new
-    ? 'bg-accent-navy text-brand-white'
-    : 'bg-status-error text-brand-white';
+    ? 'bg-brand-charcoal text-brand-white border border-brand-white/10'
+    : 'bg-brand-black text-brand-white border border-accent-gold/50';
 
   return (
     <motion.div
@@ -57,10 +57,17 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
         )}
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 z-20 bg-brand-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-          <span className="bg-brand-white text-brand-black px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2">
+        <div className="absolute inset-0 z-20 bg-brand-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4">
+          <span className="bg-brand-white text-brand-black px-6 py-2.5 rounded-sm text-sm font-semibold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
             <Eye size={16} /> Ver detalhes
           </span>
+          <div className="flex gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+            {product.sizes.map((size) => (
+              <span key={size} className="w-8 h-8 rounded-full bg-brand-black border border-brand-white/20 text-brand-white flex items-center justify-center text-[10px] font-bold">
+                {size}
+              </span>
+            ))}
+          </div>
         </div>
       </Link>
 
@@ -111,13 +118,8 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
           )}
         </div>
 
-        {/* Sizes preview */}
-        <div className="flex gap-1 mt-3 flex-wrap">
-          {product.sizes.map((size) => (
-            <span key={size} className="text-[10px] text-brand-graphite/50 border border-brand-graphite/15 rounded px-1.5 py-0.5 font-body">
-              {size}
-            </span>
-          ))}
+        {/* Sizes preview hidden on default to reveal on hover instead, but we leave the container empty for layout if needed, or remove it entirely */}
+        <div className="flex gap-1 mt-3 flex-wrap opacity-0 h-0">
         </div>
       </div>
     </motion.div>

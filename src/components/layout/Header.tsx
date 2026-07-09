@@ -6,6 +6,7 @@ import { useCartStore } from '@/store/cartStore';
 import { useUIStore } from '@/store/uiStore';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
   const itemCount = useCartStore((s) => s.getItemCount());
@@ -32,10 +33,10 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           scrolled
-            ? 'bg-brand-black/95 backdrop-blur-md shadow-lg'
-            : 'bg-transparent'
+            ? 'bg-brand-black/70 backdrop-blur-xl border-b border-brand-white/10 shadow-xl py-0'
+            : 'bg-gradient-to-b from-brand-black/80 to-transparent py-2'
         )}
       >
         <div className="container-custom">
@@ -97,45 +98,67 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-brand-black/90 backdrop-blur-md" onClick={() => setMobileMenuOpen(false)} />
-          <nav className="relative z-50 flex flex-col items-center justify-center h-full gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-2xl text-brand-white hover:text-accent-gold transition-colors font-display"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              href="/meu-pedido"
-              className="text-2xl text-brand-white hover:text-accent-gold transition-colors font-display flex items-center gap-3"
+      {/* Mobile Menu Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-brand-black/80 backdrop-blur-sm lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.nav
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-brand-charcoal z-50 flex flex-col p-8 border-l border-brand-white/10 lg:hidden shadow-2xl"
             >
-              <ShoppingBag size={24} /> Meu Pedido
-              {mounted && itemCount > 0 && (
-                <span className="bg-accent-gold text-brand-black text-sm font-bold rounded-full px-2 py-0.5">
-                  {itemCount}
-                </span>
-              )}
-            </Link>
-            <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5581999999999'}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg text-lg transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <MessageCircle size={20} /> Falar com atendente
-            </a>
-          </nav>
-        </div>
-      )}
+              <div className="flex justify-end mb-8">
+                <button onClick={() => setMobileMenuOpen(false)} className="text-brand-white/70 hover:text-accent-gold p-2">
+                  <X size={28} />
+                </button>
+              </div>
+              <div className="flex flex-col gap-6">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="text-2xl text-brand-white hover:text-accent-gold transition-colors font-display"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <div className="h-px w-full bg-brand-white/10 my-4" />
+                <Link
+                  href="/meu-pedido"
+                  className="text-xl text-brand-white hover:text-accent-gold transition-colors font-body flex items-center gap-3"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <ShoppingBag size={20} /> Meu Pedido
+                  {mounted && itemCount > 0 && (
+                    <span className="bg-accent-gold text-brand-black text-xs font-bold rounded-full px-2 py-0.5">
+                      {itemCount}
+                    </span>
+                  )}
+                </Link>
+                <a
+                  href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5581999999999'}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-8 flex items-center justify-center gap-2 bg-brand-white text-brand-black hover:bg-accent-gold hover:text-brand-black px-6 py-3 rounded-sm font-semibold transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <MessageCircle size={18} /> Falar com atendente
+                </a>
+              </div>
+            </motion.nav>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

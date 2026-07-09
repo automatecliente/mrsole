@@ -38,7 +38,7 @@ export default function FeaturedProducts() {
           </div>
           <Link
             href="/colecao"
-            className="inline-flex items-center gap-2 text-sm text-accent-gold hover:text-accent-brown font-semibold font-body transition-colors group"
+            className="inline-flex items-center gap-2 text-sm text-accent-gold hover:text-accent-gold-dark font-semibold font-body transition-colors group"
           >
             Ver toda a coleção
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

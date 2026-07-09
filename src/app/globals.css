@@ -2,29 +2,27 @@
 
 @theme inline {
   /* === BRAND COLORS === */
-  --color-brand-black: #0A0A0A;
-  --color-brand-charcoal: #1A1A1A;
-  --color-brand-graphite: #2D2D2D;
-  --color-brand-sand: #F5F0E8;
-  --color-brand-cream: #FAF7F2;
-  --color-brand-white: #FEFEFE;
+  --color-brand-black: #000000;
+  --color-brand-charcoal: #111111;
+  --color-brand-graphite: #222222;
+  --color-brand-sand: #F8F8F8;
+  --color-brand-cream: #FAFAFA;
+  --color-brand-white: #FFFFFF;
 
   /* === ACCENT COLORS === */
-  --color-accent-gold: #C5A572;
-  --color-accent-gold-light: #D4BC91;
-  --color-accent-olive: #6B7B3A;
-  --color-accent-brown: #8B6914;
-  --color-accent-navy: #1B2A4A;
+  --color-accent-gold: #D4AF37;
+  --color-accent-gold-light: #F4E2B1;
+  --color-accent-gold-dark: #AA8C2C;
 
   /* === STATUS COLORS === */
-  --color-status-success: #2D6A4F;
-  --color-status-warning: #E9C46A;
-  --color-status-error: #C1292E;
-  --color-status-info: #457B9D;
+  --color-status-success: #1E4620;
+  --color-status-warning: #B38600;
+  --color-status-error: #990000;
+  --color-status-info: #003366;
 
   /* === SURFACE COLORS === */
-  --color-surface-primary: #FEFEFE;
-  --color-surface-secondary: #F5F0E8;
+  --color-surface-primary: #FFFFFF;
+  --color-surface-secondary: #FAFAFA;
   --color-surface-elevated: #FFFFFF;
 
   /* === FONTS === */
