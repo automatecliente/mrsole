@@ -41,7 +41,7 @@ export default function Header() {
         )}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-20 md:h-24">
             {/* Mobile menu */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -52,15 +52,15 @@ export default function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative h-10 md:h-12 w-auto flex items-center justify-center">
+            <Link href="/" className="flex items-center gap-3 group py-1">
+              <div className="relative h-12 sm:h-14 md:h-16 w-auto flex items-center justify-center">
                 <Image
                   src="/images/logos/Logo.png"
                   alt="MR SOLE Outfit"
-                  width={200}
-                  height={55}
+                  width={280}
+                  height={80}
                   priority
-                  className="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-12 sm:h-14 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </Link>
@@ -126,9 +126,9 @@ export default function Header() {
                 <Image
                   src="/images/logos/Logo.png"
                   alt="MR SOLE Outfit"
-                  width={150}
-                  height={40}
-                  className="h-8 w-auto object-contain"
+                  width={220}
+                  height={60}
+                  className="h-12 w-auto object-contain"
                 />
                 <button onClick={() => setMobileMenuOpen(false)} className="text-brand-white/70 hover:text-amber-400 p-2">
                   <X size={26} />
