@@ -13,7 +13,7 @@ export const categories: Category[] = [
     slug: 'social',
     name: 'Camisas Sociais',
     description: 'Elegância para ambientes profissionais e eventos formais.',
-    image: '/images/categories/social.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.08.56.jpeg',
     productCount: 4,
   },
   {
@@ -21,7 +21,7 @@ export const categories: Category[] = [
     slug: 'casual',
     name: 'Camisas Casuais',
     description: 'Estilo descontraído com personalidade e conforto.',
-    image: '/images/categories/casual.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.09.02 (1).jpeg',
     productCount: 3,
   },
   {
@@ -29,7 +29,7 @@ export const categories: Category[] = [
     slug: 'linho',
     name: 'Camisas de Linho',
     description: 'Leveza e frescor para dias quentes com muito charme.',
-    image: '/images/categories/linho.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.08.57.jpeg',
     productCount: 2,
   },
   {
@@ -37,7 +37,7 @@ export const categories: Category[] = [
     slug: 'manga-longa',
     name: 'Manga Longa',
     description: 'Clássicas e versáteis para todas as estações.',
-    image: '/images/categories/manga-longa.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.09.07.jpeg',
     productCount: 8,
   },
   {
@@ -45,7 +45,7 @@ export const categories: Category[] = [
     slug: 'manga-curta',
     name: 'Manga Curta',
     description: 'Frescor e modernidade para os dias quentes.',
-    image: '/images/categories/manga-curta.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.09.03 (1).jpeg',
     productCount: 2,
   },
   {
@@ -53,7 +53,7 @@ export const categories: Category[] = [
     slug: 'combo',
     name: 'Combos',
     description: 'Monte seu guarda-roupa com economia e praticidade.',
-    image: '/images/categories/combo.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.09.04.jpeg',
     productCount: 1,
   },
   {
@@ -61,7 +61,7 @@ export const categories: Category[] = [
     slug: 'lancamento',
     name: 'Lançamentos',
     description: 'As novidades mais recentes da MRSOLE Outfit.',
-    image: '/images/categories/lancamento.jpg',
+    image: '/images/products/WhatsApp Image 2026-07-10 at 18.09.05.jpeg',
     productCount: 4,
   },
 ];

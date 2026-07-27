@@ -35,7 +35,7 @@ export default function HowItWorks() {
           className="text-center mb-14"
         >
           <h2 className="font-display text-3xl md:text-4xl text-brand-black mb-3">
-            Como <span className="text-accent-gold">funciona</span>
+            Como <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">funciona</span>
           </h2>
           <p className="text-brand-graphite/70 font-body max-w-xl mx-auto">
             Você escolhe os produtos no site, envia o pedido pelo WhatsApp e nossa atendente confirma disponibilidade, pagamento e entrega.
@@ -54,12 +54,12 @@ export default function HowItWorks() {
             >
               {/* Connector line */}
               {i < steps.length - 1 && (
-                <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-[1px] bg-gradient-to-r from-accent-gold/40 to-accent-gold/10" />
+                <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-[2px] bg-gradient-to-r from-amber-500/50 to-orange-500/10" />
               )}
 
-              <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-brand-sand group-hover:bg-accent-gold/10 transition-colors mb-6">
-                <step.icon size={32} className="text-accent-gold" />
-                <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-brand-black text-brand-white text-xs font-bold flex items-center justify-center font-body">
+              <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-brand-sand group-hover:bg-amber-500/10 transition-colors mb-6 shadow-sm border border-brand-black/5">
+                <step.icon size={32} className="text-amber-500" />
+                <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-brand-black text-xs font-bold flex items-center justify-center font-body shadow-md">
                   {step.number}
                 </span>
               </div>

@@ -24,10 +24,10 @@ export default function ProductCard({ product, onQuickAdd }: ProductCardProps) {
     : null;
 
   const badgeColor = product.is_best_seller
-    ? 'bg-accent-gold text-brand-black'
+    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-brand-black font-bold shadow-md'
     : product.is_new
     ? 'bg-brand-charcoal text-brand-white border border-brand-white/10'
-    : 'bg-brand-black text-brand-white border border-accent-gold/50';
+    : 'bg-brand-black text-amber-400 border border-amber-500/40';
 
   return (
     <motion.div

@@ -30,7 +30,7 @@ export default function FeaturedProducts() {
         >
           <div>
             <h2 className="font-display text-3xl md:text-4xl text-brand-black mb-3">
-              Peças em <span className="text-accent-gold">destaque</span>
+              Peças em <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-600">destaque</span>
             </h2>
             <p className="text-brand-graphite/70 font-body max-w-xl">
               As camisas mais desejadas da nossa coleção, selecionadas para você.
@@ -38,7 +38,7 @@ export default function FeaturedProducts() {
           </div>
           <Link
             href="/colecao"
-            className="inline-flex items-center gap-2 text-sm text-accent-gold hover:text-accent-gold-dark font-semibold font-body transition-colors group"
+            className="inline-flex items-center gap-2 text-sm text-amber-600 hover:text-orange-600 font-semibold font-display tracking-wider uppercase transition-colors group"
           >
             Ver toda a coleção
             <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -47,7 +47,7 @@ export default function FeaturedProducts() {
 
         {loading ? (
           <div className="flex justify-center py-10">
-            <Loader2 size={32} className="text-accent-gold animate-spin" />
+            <Loader2 size={32} className="text-amber-500 animate-spin" />
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">

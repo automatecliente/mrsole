@@ -1,25 +1,31 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { AtSign, MessageCircle } from 'lucide-react';
 import { BRAND_NAME, WHATSAPP_NUMBER } from '@/lib/constants';
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-black text-brand-white/70 pt-16 pb-8">
+    <footer className="bg-brand-black border-t border-brand-white/10 text-brand-white/70 pt-16 pb-8">
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <h3 className="font-display text-2xl font-bold text-brand-white mb-4">
-              MR<span className="text-accent-gold">SOLE</span>
-              <span className="text-sm font-body tracking-widest text-brand-white/40 ml-2">Outfit</span>
-            </h3>
+            <div className="mb-5">
+              <Image
+                src="/images/logos/Logo.png"
+                alt="MR SOLE Outfit"
+                width={180}
+                height={50}
+                className="h-10 w-auto object-contain"
+              />
+            </div>
             <p className="text-sm leading-relaxed mb-4">
               Camisaria masculina premium para homens que se vestem com presença e sofisticação.
             </p>
             <div className="flex gap-3">
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-brand-white/10 hover:bg-accent-gold/20 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full bg-brand-white/10 hover:bg-amber-500/20 hover:text-amber-400 flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <AtSign size={18} />
@@ -28,7 +34,7 @@ export default function Footer() {
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-brand-white/10 hover:bg-green-600/30 flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full bg-brand-white/10 hover:bg-green-600/30 hover:text-green-400 flex items-center justify-center transition-colors"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={18} />
@@ -49,7 +55,7 @@ export default function Footer() {
                 { href: '/guia-de-medidas', label: 'Guia de Medidas' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-accent-gold transition-colors">
+                  <Link href={link.href} className="text-sm hover:text-amber-400 transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -69,7 +75,7 @@ export default function Footer() {
                 { href: '/meu-pedido', label: 'Meu Pedido' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm hover:text-accent-gold transition-colors">
+                  <Link href={link.href} className="text-sm hover:text-amber-400 transition-colors">
                     {link.label}
                   </Link>
                 </li>

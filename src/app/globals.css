@@ -2,32 +2,36 @@
 
 @theme inline {
   /* === BRAND COLORS === */
-  --color-brand-black: #000000;
-  --color-brand-charcoal: #111111;
-  --color-brand-graphite: #222222;
-  --color-brand-sand: #F8F8F8;
-  --color-brand-cream: #FAFAFA;
+  --color-brand-black: #09090B;
+  --color-brand-charcoal: #141417;
+  --color-brand-graphite: #27272A;
+  --color-brand-sand: #F4F4F5;
+  --color-brand-cream: #FAF9F6;
   --color-brand-white: #FFFFFF;
 
-  /* === ACCENT COLORS === */
-  --color-accent-gold: #D4AF37;
-  --color-accent-gold-light: #F4E2B1;
-  --color-accent-gold-dark: #AA8C2C;
+  /* === ACCENT COLORS (SOLAR BRAND) === */
+  --color-accent-gold: #F59E0B;
+  --color-accent-gold-light: #FBBF24;
+  --color-accent-gold-dark: #D97706;
+
+  --color-accent-solar: #F97316;
+  --color-accent-solar-light: #FB923C;
+  --color-accent-solar-dark: #EA580C;
 
   /* === STATUS COLORS === */
-  --color-status-success: #1E4620;
-  --color-status-warning: #B38600;
-  --color-status-error: #990000;
-  --color-status-info: #003366;
+  --color-status-success: #166534;
+  --color-status-warning: #D97706;
+  --color-status-error: #DC2626;
+  --color-status-info: #0284C7;
 
   /* === SURFACE COLORS === */
   --color-surface-primary: #FFFFFF;
-  --color-surface-secondary: #FAFAFA;
+  --color-surface-secondary: #FAF9F6;
   --color-surface-elevated: #FFFFFF;
 
   /* === FONTS === */
-  --font-display: "Playfair Display", Georgia, serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: var(--font-outfit), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 
   /* === FONT SIZES === */
 
@@ -91,18 +95,18 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-brown);
+  background: var(--color-accent-solar);
 }
 
 /* === SELECTION === */
 ::selection {
-  background-color: var(--color-accent-gold);
+  background-color: var(--color-accent-solar);
   color: var(--color-brand-white);
 }
 
 /* === FOCUS === */
 *:focus-visible {
-  outline: 2px solid var(--color-accent-gold);
+  outline: 2px solid var(--color-accent-solar);
   outline-offset: 2px;
 }
 

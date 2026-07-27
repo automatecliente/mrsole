@@ -1,55 +1,74 @@
 import { Product, ProductFilters, CartItem } from '@/types';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
+import { mockProducts } from '@/data/mockProducts';
 
 export const productService = {
   async getAllProducts(): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) return mockProducts;
     const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts;
   },
 
   async getProductBySlug(slug: string): Promise<Product | undefined> {
-    if (!isSupabaseConfigured() || !supabase) return undefined;
+    if (!isSupabaseConfigured() || !supabase) {
+      return mockProducts.find((p) => p.slug === slug);
+    }
     const { data, error } = await supabase.from('products').select('*').eq('slug', slug).single();
     if (!error && data) return data as Product;
-    return undefined;
+    return mockProducts.find((p) => p.slug === slug);
   },
 
   async getFeaturedProducts(): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) {
+      return mockProducts.filter((p) => p.is_featured && p.active);
+    }
     const { data, error } = await supabase.from('products').select('*').eq('is_featured', true).eq('active', true);
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts.filter((p) => p.is_featured && p.active);
   },
 
   async getBestSellers(): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) {
+      return mockProducts.filter((p) => p.is_best_seller && p.active);
+    }
     const { data, error } = await supabase.from('products').select('*').eq('is_best_seller', true).eq('active', true);
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts.filter((p) => p.is_best_seller && p.active);
   },
 
   async getNewProducts(): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) {
+      return mockProducts.filter((p) => p.is_new && p.active);
+    }
     const { data, error } = await supabase.from('products').select('*').eq('is_new', true).eq('active', true);
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts.filter((p) => p.is_new && p.active);
   },
 
   async getProductsByCategory(category: string): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) {
+      return mockProducts.filter((p) => p.category === category && p.active);
+    }
     const { data, error } = await supabase.from('products').select('*').eq('category', category).eq('active', true);
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts.filter((p) => p.category === category && p.active);
   },
 
   async getRelatedProducts(productId: string, limit = 4): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    if (!isSupabaseConfigured() || !supabase) {
+      const current = mockProducts.find((p) => p.id === productId);
+      const cat = current?.category || 'casual';
+      return mockProducts.filter((p) => p.category === cat && p.id !== productId && p.active).slice(0, limit);
+    }
     
     // First, fetch the current product to know its category
     const { data: current, error: currentErr } = await supabase.from('products').select('category').eq('id', productId).single();
-    if (currentErr || !current) return [];
+    if (currentErr || !current) {
+      const fallbackCurrent = mockProducts.find((p) => p.id === productId);
+      const cat = fallbackCurrent?.category || 'casual';
+      return mockProducts.filter((p) => p.category === cat && p.id !== productId && p.active).slice(0, limit);
+    }
 
     const { data, error } = await supabase.from('products')
       .select('*')
@@ -58,15 +77,22 @@ export const productService = {
       .eq('active', true)
       .limit(limit);
 
-    if (!error && data) return data as Product[];
-    return [];
+    if (!error && data && data.length > 0) return data as Product[];
+    return mockProducts.filter((p) => p.category === current.category && p.id !== productId && p.active).slice(0, limit);
   },
 
   async getUpsellProducts(cartItems: CartItem[]): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
+    let allProducts = mockProducts;
+
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase.from('products').select('*').eq('active', true);
+      if (!error && data && data.length > 0) {
+        allProducts = data as Product[];
+      }
+    }
     
     if (cartItems.length === 0) {
-       return this.getFeaturedProducts().then(res => res.slice(0, 3));
+      return allProducts.filter((p) => p.is_featured).slice(0, 3);
     }
 
     const cartCategories = [...new Set(cartItems.map((i) => i.product.category))];
@@ -77,16 +103,6 @@ export const productService = {
     if (cartCategories.includes('casual')) complementary.push('social', 'linho');
     if (!cartCategories.includes('combo')) complementary.push('combo');
 
-    let query = supabase.from('products').select('*').eq('active', true);
-    
-    // Se tiver categorias complementares, priorizamos elas ou best sellers, 
-    // mas devido à limitação do PostgREST para queries OR complexas de array, 
-    // faremos uma filtragem local complementar dos resultados ativos
-    const { data, error } = await query;
-    if (error || !data) return [];
-
-    let allProducts = data as Product[];
-    
     const suggestions = allProducts
       .filter(
         (p) =>
@@ -101,58 +117,76 @@ export const productService = {
   },
 
   async filterProducts(filters: ProductFilters): Promise<Product[]> {
-    if (!isSupabaseConfigured() || !supabase) return [];
-    
-    let query = supabase.from('products').select('*').eq('active', true);
+    let result = mockProducts.filter((p) => p.active);
+
+    if (isSupabaseConfigured() && supabase) {
+      let query = supabase.from('products').select('*').eq('active', true);
+
+      if (filters.search) {
+        query = query.or(`name.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`);
+      }
+      if (filters.category && filters.category.length > 0) {
+        query = query.in('category', filters.category);
+      }
+      if (filters.sleeveType && filters.sleeveType.length > 0) {
+        query = query.in('sleeve_type', filters.sleeveType);
+      }
+      if (filters.isBestSeller) {
+        query = query.eq('is_best_seller', true);
+      }
+      if (filters.isNew) {
+        query = query.eq('is_new', true);
+      }
+
+      switch (filters.sortBy) {
+        case 'price_asc':
+          query = query.order('price', { ascending: true });
+          break;
+        case 'price_desc':
+          query = query.order('price', { ascending: false });
+          break;
+        case 'newest':
+          query = query.order('created_at', { ascending: false });
+          break;
+        case 'best_sellers':
+          query = query.order('is_best_seller', { ascending: false, nullsFirst: false });
+          break;
+        case 'recommended':
+        default:
+          query = query.order('is_best_seller', { ascending: false }).order('created_at', { ascending: false });
+      }
+
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) {
+        result = data as Product[];
+      }
+    }
 
     if (filters.search) {
-      // Usando ilike para buscar em name ou short_description
-      query = query.or(`name.ilike.%${filters.search}%,short_description.ilike.%${filters.search}%`);
+      const searchLower = filters.search.toLowerCase();
+      result = result.filter(
+        (p) =>
+          p.name.toLowerCase().includes(searchLower) ||
+          p.short_description.toLowerCase().includes(searchLower)
+      );
     }
 
     if (filters.category && filters.category.length > 0) {
-      query = query.in('category', filters.category);
+      result = result.filter((p) => filters.category!.includes(p.category));
     }
 
     if (filters.sleeveType && filters.sleeveType.length > 0) {
-      query = query.in('sleeve_type', filters.sleeveType);
+      result = result.filter((p) => filters.sleeveType!.includes(p.sleeve_type));
     }
 
     if (filters.isBestSeller) {
-      query = query.eq('is_best_seller', true);
+      result = result.filter((p) => p.is_best_seller);
     }
 
     if (filters.isNew) {
-      query = query.eq('is_new', true);
+      result = result.filter((p) => p.is_new);
     }
 
-    // Sort mappings
-    switch (filters.sortBy) {
-      case 'price_asc':
-        query = query.order('price', { ascending: true }); // Aproximação, já que tem promotional_price
-        break;
-      case 'price_desc':
-        query = query.order('price', { ascending: false });
-        break;
-      case 'newest':
-        query = query.order('created_at', { ascending: false });
-        break;
-      case 'best_sellers':
-        query = query.order('is_best_seller', { ascending: false, nullsFirst: false });
-        break;
-      case 'recommended':
-      default:
-        // Ordem padrão, misturando best seller e created_at
-        query = query.order('is_best_seller', { ascending: false }).order('created_at', { ascending: false });
-    }
-
-    const { data, error } = await query;
-    if (error || !data) return [];
-
-    let result = data as Product[];
-
-    // Arrays no jsonb de sizes/colors/fabric são difíceis de filtrar diretamente no RPC simples do Supabase sem configurações extras.
-    // Como a base de produtos não costuma ser gigante no front, aplicamos o refinamento de json em memória aqui:
     if (filters.sizes && filters.sizes.length > 0) {
       result = result.filter((p) => p.sizes.some((s) => filters.sizes!.includes(s)));
     }
