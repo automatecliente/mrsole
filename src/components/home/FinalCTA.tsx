@@ -3,11 +3,17 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import SolarSunEmblem from '@/components/shared/SolarSunEmblem';
 
 export default function FinalCTA() {
   return (
     <section className="py-20 md:py-32 bg-brand-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.2),_transparent_60%)]" />
+      
+      {/* Background Solar Emblem */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.06] pointer-events-none">
+        <SolarSunEmblem size={600} />
+      </div>
       
       <div className="container-custom relative z-10">
         <motion.div
